@@ -1,0 +1,23 @@
+@(status: actors.OverallStatus)
+
+@main("Валидатор Mail.ru"){
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">Текущий батч</h3>
+    </div>
+    <div class="panel-body">
+        <p>Валидация выполнено успешно</p>
+        <p>Провалидировано адресов: @finished.size</p>
+        <p>Начало: @finished.start.format("hh:mm dd.MM.YYYY")</p>
+        <p>Окончание: @finished.end.format("hh:mm dd.MM.YYYY")</p>
+        <p>Средняя скорость (запросов в секунду): @finished.speed</p>
+        <p>
+            <a href="/result/get/@finished.id" target="_blank">Скачать файл с результатми валидации</a>
+        </p>
+    </div>
+</div>
+
+@uploadForm("Проверить еще один батч")
+
+}
