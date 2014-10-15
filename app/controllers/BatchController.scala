@@ -19,27 +19,26 @@ object BatchController extends Controller {
 
   implicit val timeout = Timeout(10 seconds)
 
-  def list = Action.async{(manager ? GetOverallStatus).mapTo[OverallStatus].map(s => {
-    Ok(view.html.index(s))
-  })
+  def index = Action.async{(manager ? GetOverallStatus).mapTo[OverallStatus].map(s => {
+    Ok(views.html.index(s))
+  })}
 
-  def add = Ok(views.html.upload())
+  def add = Action{Ok(views.html.upload())}
 
   def upload = Action(parse.multipartFormData) { request =>
     request.body.file("emailsFile").map { file =>
       val id = generateId
       BatchPath.acclaimBatch(file.ref, id)
       manager ! LaunchBatch(id)
-      Redirect(routes.BatchController.batch.get(id))
-      Ok(views.html.redirect())
+      Redirect(routes.BatchController.get(id))
     }.getOrElse {
       Ok("Error file")
     }
   }
 
   def get(id: String) = Action.async{(manager ? GetStatus(id)).mapTo[BatchStatus].map({
-    case s:ProcessingBatch => Ok(view.html.processing(s))
-    case f:FinishedBatch => Ok(view.html.finished(f))
+    case s:ProcessingBatch => Ok(views.html.processing(s))
+    case f:FinishedBatch => Ok(views.html.finished(f))
   })}
   
   def resultFile(id: String) = Action {

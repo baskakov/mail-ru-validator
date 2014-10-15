@@ -2,29 +2,6 @@
 
 @main(status.processed.toString){
 
+    @processingBlock(status)
 
-<div class="panel panel-info">
-    <div class="panel-heading">
-        <h3 class="panel-title">Шаг 2. Дождитесь завершения валидации</h3>
-    </div>
-    <div class="panel-body">
-<dl>
-    <dt>Размер батча</dt>
-    <dd>@status.size</dd>
-    <dt>Обработано</dt>
-    <dd>@status.processed</dd>
-    <dt>Скорость обработки запросов/час</dt>
-    <dd>@status.speed</dd>
-    <dt>Текущие результаты</dt>
-    <dd>
-        <a href="/result/get/@status.id" target="_blank">Скачать файл с текущими результатами</a>
-    <dd>
-</dl>
-
-    </div>
-    </div>
-
-<script language="JavaScript">
-setTimeout(function () { location.reload(1); }, 5000);
-</script>
 }

@@ -3,13 +3,14 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
-GET     /batch/list                 controllers.BatchController.list
-GET     /batch/add                  controllers.BatchController.add
-GET     /batch/upload               controllers.BatchController.upload
-GET     /batch/get/:id              controllers.BatchController.get(id: String
-GET     /batch/result/:id           controllers.BatchController.resultFile(id: String
-GET     /batch/request/:id          controllers.BatchController.requestFile(id: String
+GET     /                           controllers.BatchController.index
+#GET     /batch/list                 controllers.BatchController.list
+#GET     /batch/add                  controllers.BatchController.add
+POST     /batch/upload               controllers.BatchController.upload
+GET     /batch/get/:id              controllers.BatchController.get(id: String)
+GET     /batch/result/:id           controllers.BatchController.resultFile(id: String)
+GET     /batch/request/:id          controllers.BatchController.requestFile(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /webjars/*file              controllers.WebJarAssets.at(file)

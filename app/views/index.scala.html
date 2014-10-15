@@ -2,22 +2,58 @@
 
 @main("Валидатор Mail.ru"){
 
+@if(status.processing.isDefined) {
+    @processingBlock(status.processing.get)
+} else {
+    @uploadForm("Загрузите батч для проверки")
+}
+
+@if(status.queue.nonEmpty) {
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">В очереди на проверку</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Размер</th>
+                </tr>
+                @for(ques <- status.queue) {
+                <tr>
+                    <td>ques.id</td>
+                    <td>ques.size</td>
+                </tr>
+                }
+            </table>
+        </div>
+    </div>
+}
+
+@if(status.finished.nonEmpty) {
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title">Текущий батч</h3>
+        <h3 class="panel-title">Проверенные батчи</h3>
     </div>
     <div class="panel-body">
-        <p>Валидация выполнено успешно</p>
-        <p>Провалидировано адресов: @finished.size</p>
-        <p>Начало: @finished.start.format("hh:mm dd.MM.YYYY")</p>
-        <p>Окончание: @finished.end.format("hh:mm dd.MM.YYYY")</p>
-        <p>Средняя скорость (запросов в секунду): @finished.speed</p>
-        <p>
-            <a href="/result/get/@finished.id" target="_blank">Скачать файл с результатми валидации</a>
-        </p>
+        <table class="table table-hover table-striped">
+            <tr>
+                <th>ID</th>
+                <th>Размер</th>
+                <th>Начало</th>
+                <th>Окончание</th>
+            </tr>
+            @for(fins <- status.finished) {
+            <tr>
+                <td>fins.id</td>
+                <td>fins.size</td>
+                <td>fins.start.format("dd-MM-yyyy HH:mm")</td>
+                <td>fins.end.format("dd-MM-yyyy HH:mm")</td>
+            </tr>
+            }
+        </table>
     </div>
 </div>
-
-@uploadForm("Проверить еще один батч")
+}
 
 }
